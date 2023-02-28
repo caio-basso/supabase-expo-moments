@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
-import { View, Text, TextInput } from 'react-native'
+import { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { View, Text, TextInput } from 'react-native';
 
 export default function Account({ session }) {
-  const [loading, setLoading] = useState(true)
-  const [email, setEmail] = useState(session?.user.email)
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState(session?.user.email);
+  const [password, setPassword] = useState('');
 
   async function updateUser() {
-    setLoading(true);
     if(email !== "" && email !== session?.user.email) {
         const { data, error } = await supabase.auth.updateUser({ email: email });
         setEmail(email);
@@ -19,7 +17,6 @@ export default function Account({ session }) {
         setPassword('');
     }
 
-    setLoading(false);
 }
 
   return (

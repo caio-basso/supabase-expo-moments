@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Alert, View, TextInput, Text, } from 'react-native'
-import { supabase } from '../lib/supabase'
+import React, { useState } from 'react';
+import { Alert, View, TextInput, Text, } from 'react-native';
+import { supabase } from '../lib/supabase';
 
 export default function Auth() {
   const [email, setEmail] = useState('')
