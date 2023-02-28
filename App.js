@@ -1,11 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import 'react-native-url-polyfill/auto'
+import { useState, useEffect } from 'react'
+import { supabase } from './lib/supabase'
+import Auth from './components/Auth'
+import Account from './components/Account'
+import { View } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 
 export default function App() {
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+  }, [])
+
   return (
-    <View className="flex-1 items-center justify-center bg-red-600">
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <LinearGradient colors={['#a855f7', '#3c82f6']}>
+      <View className="flex justify-center items-center h-full">
+        {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+      </View>
+    </LinearGradient>
+  )
 }
